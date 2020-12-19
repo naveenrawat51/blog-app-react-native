@@ -12,7 +12,7 @@ import { useStateValue } from "../context/BlogContext";
 import { ADD_LOGPOST, DELETE_BLOGPOST } from "../contextReducer/reducer";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function IndexScreen() {
+export default function IndexScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
 
   return (
@@ -32,24 +32,30 @@ export default function IndexScreen() {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => {
             return (
-              <View style={styles.blog}>
-                <Text style={styles.title}>{item.name}</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    dispatch({
-                      type: DELETE_BLOGPOST,
-                      payload: item.id,
-                    })
-                  }
-                  style={styles.deleteButton}
-                >
-                  <Ionicons
-                    name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
-                    size={23}
-                    color="red"
-                  />
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("blogDetail", { ...item })}
+              >
+                <View style={styles.blog}>
+                  <Text style={styles.title}>{item.name}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      dispatch({
+                        type: DELETE_BLOGPOST,
+                        payload: item.id,
+                      })
+                    }
+                    style={styles.deleteButton}
+                  >
+                    <Ionicons
+                      name={
+                        Platform.OS === "android" ? "md-trash" : "ios-trash"
+                      }
+                      size={23}
+                      color="red"
+                    />
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
             );
           }}
         />
