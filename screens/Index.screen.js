@@ -1,14 +1,22 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  FlatList,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import { useStateValue } from "../context/BlogContext";
-import { ADD_LOGPOST } from "../contextReducer/reducer";
+import { ADD_LOGPOST, DELETE_BLOGPOST } from "../contextReducer/reducer";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function IndexScreen() {
   const [state, dispatch] = useStateValue();
 
   return (
     <View style={styles.container}>
-      <Text>Index Screen {state.blogPosts.length}</Text>
       <Button
         title="add Post"
         onPress={() =>
@@ -22,7 +30,28 @@ export default function IndexScreen() {
         <FlatList
           data={state.blogPosts}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <Text>{item.name}</Text>}
+          renderItem={({ item }) => {
+            return (
+              <View style={styles.blog}>
+                <Text style={styles.title}>{item.name}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    dispatch({
+                      type: DELETE_BLOGPOST,
+                      payload: item.id,
+                    })
+                  }
+                  style={styles.deleteButton}
+                >
+                  <Ionicons
+                    name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
+                    size={23}
+                    color="red"
+                  />
+                </TouchableOpacity>
+              </View>
+            );
+          }}
         />
       )}
     </View>
@@ -39,7 +68,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  },
+  blog: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 5,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "gray",
+    paddingHorizontal: 10,
+  },
+  title: {
+    fontSize: 18,
+    fontFamily: "open-sans-bold",
   },
 });
