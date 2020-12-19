@@ -3,7 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Platform } from "react-native";
 import Colors from "../constant/Colors";
 import IndexScreen, { IndexScreenOptions } from "../screens/Index.screen";
-import BlogDetails, { BlogDetailsOptions } from "../screens/BlogDetails";
+import BlogDetails, { BlogDetailsOptions } from "../screens/BlogDetails.screen";
+import AddPostScreen from "../screens/AddPost.screen";
 
 const defaultNavOption = {
   headerStyle: {
@@ -32,6 +33,7 @@ export const IndexNavigator = () => {
         component={BlogDetails}
         options={BlogDetailsOptions}
       />
+      <IndexStackNavigator.Screen name="newPost" component={AddPostScreen} />
     </IndexStackNavigator.Navigator>
   );
 };

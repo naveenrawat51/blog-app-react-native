@@ -3,7 +3,7 @@ export const DELETE_BLOGPOST = "DELETE_BLOGPOST";
 export const UPDATE_BLOGPOST = "UPDATE_BLOGPOST";
 
 export const initialState = {
-  blogPosts: [{ name: "shiva", id: 1234 }],
+  blogPosts: [],
 };
 
 export function reducer(state = initialState, action) {
@@ -22,6 +22,18 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         blogPosts: getNewPosts,
+      };
+    case UPDATE_BLOGPOST:
+      const findupdatedBlogIndex = state.blogPosts.findIndex(
+        (blog) => blog.id === action.payload.id
+      );
+      let copyAllPosts = [...state.blogPosts];
+      const findBlogToUpdate = copyAllPosts[findupdatedBlogIndex];
+      const updatedBlog = { ...findBlogToUpdate, ...action.payload };
+      copyAllPosts[findupdatedBlogIndex] = updatedBlog;
+      return {
+        ...state,
+        blogPosts: copyAllPosts,
       };
     default:
       return state;
