@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Platform } from "react-native";
 import Colors from "../constant/Colors";
 import IndexScreen, { IndexScreenOptions } from "../screens/Index.screen";
+import BlogDetails, { BlogDetailsOptions } from "../screens/BlogDetails";
 
 const defaultNavOption = {
   headerStyle: {
@@ -25,6 +26,11 @@ export const IndexNavigator = () => {
         name="allBlog"
         component={IndexScreen}
         options={IndexScreenOptions}
+      />
+      <IndexStackNavigator.Screen
+        name="blogDetail"
+        component={BlogDetails}
+        options={BlogDetailsOptions}
       />
     </IndexStackNavigator.Navigator>
   );

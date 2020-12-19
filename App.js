@@ -4,6 +4,7 @@ import AppNavigator from "./navigation/AppNavigator";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { BlogProvider } from "./context/BlogContext";
+import { initialState, reducer } from "./contextReducer/reducer";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -26,7 +27,7 @@ export default function App() {
   }
 
   return (
-    <BlogProvider>
+    <BlogProvider initialState={initialState} reducer={reducer}>
       <AppNavigator />
     </BlogProvider>
   );
