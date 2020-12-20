@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,13 +8,21 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useStateValue } from "../context/BlogContext";
-import { DELETE_BLOGPOST } from "../contextReducer/reducer";
+import { DELETE_BLOGPOST } from "../contextReducer/action";
 import { Ionicons } from "@expo/vector-icons";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/HeaderButton";
+import { getAllPosts, deletePosts } from "../contextReducer/action";
 
 export default function IndexScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
+
+  useEffect(() => {
+    getAllPosts(dispatch);
+    navigation.addListener("focus", () => {
+      getAllPosts(dispatch);
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -30,12 +38,7 @@ export default function IndexScreen({ navigation }) {
                 <View style={styles.blog}>
                   <Text style={styles.title}>{item.name}</Text>
                   <TouchableOpacity
-                    onPress={() =>
-                      dispatch({
-                        type: DELETE_BLOGPOST,
-                        payload: item.id,
-                      })
-                    }
+                    onPress={() => deletePosts(dispatch, item.id)}
                     style={styles.deleteButton}
                   >
                     <Ionicons

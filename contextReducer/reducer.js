@@ -1,6 +1,9 @@
-export const ADD_LOGPOST = "ADD_LOGPOST";
-export const DELETE_BLOGPOST = "DELETE_BLOGPOST";
-export const UPDATE_BLOGPOST = "UPDATE_BLOGPOST";
+import {
+  ADD_LOGPOST,
+  DELETE_BLOGPOST,
+  UPDATE_BLOGPOST,
+  GET_ALL_BLOGPOSTS,
+} from "./action";
 
 export const initialState = {
   blogPosts: [],
@@ -8,6 +11,11 @@ export const initialState = {
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
+    case GET_ALL_BLOGPOSTS:
+      return {
+        ...state,
+        blogPosts: action.payload,
+      };
     case ADD_LOGPOST:
       return {
         ...state,
