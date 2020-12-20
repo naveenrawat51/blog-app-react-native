@@ -19,6 +19,18 @@ export const addPosts = async (dispatch, data, type) => {
     await jsonserver.post("/blogposts", data);
     dispatch({ type: type, payload: data });
   } catch (error) {
-    console.log(error);
+    console.log("naveen: ", error.message);
+  }
+};
+
+export const deletePosts = async (dispatch, id) => {
+  try {
+    await jsonserver.delete(`/blogposts/${id}`);
+    dispatch({
+      type: DELETE_BLOGPOST,
+      payload: id,
+    });
+  } catch (error) {
+    console.log("naveen: ", error.message);
   }
 };
