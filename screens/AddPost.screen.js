@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, Button } from "react-native";
 import { useStateValue } from "../context/BlogContext";
-import { ADD_LOGPOST, UPDATE_BLOGPOST } from "../contextReducer/reducer";
+import {
+  ADD_LOGPOST,
+  UPDATE_BLOGPOST,
+  addPosts,
+} from "../contextReducer/action";
 
 export default function AddPostScreen({ navigation, route }) {
   const blogId = route.params ? route.params.id : null;
@@ -14,6 +18,15 @@ export default function AddPostScreen({ navigation, route }) {
   const [title, setTitle] = useState(blogId ? getCurrentBlog.name : "");
   const [content, setContent] = useState(blogId ? getCurrentBlog.content : "");
 
+  const addPostHandler = () => {
+    const payload = {
+      name: title,
+      content,
+      id: blogId ? blogId : Math.random(),
+    };
+    addPosts(dispatch, payload, blogId ? UPDATE_BLOGPOST : ADD_LOGPOST);
+    navigation.navigate("allBlog");
+  };
   return (
     <View>
       <View style={styles.container}>
@@ -35,17 +48,7 @@ export default function AddPostScreen({ navigation, route }) {
       <View style={styles.btn}>
         <Button
           title={blogId ? "Update Post" : "Add New Blog"}
-          onPress={() => {
-            dispatch({
-              type: blogId ? UPDATE_BLOGPOST : ADD_LOGPOST,
-              payload: {
-                name: title,
-                content,
-                id: blogId ? blogId : Math.random(),
-              },
-            });
-            navigation.navigate("allBlog");
-          }}
+          onPress={addPostHandler}
         />
       </View>
     </View>

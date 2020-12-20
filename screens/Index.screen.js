@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,13 +8,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useStateValue } from "../context/BlogContext";
-import { DELETE_BLOGPOST } from "../contextReducer/reducer";
+import { DELETE_BLOGPOST } from "../contextReducer/action";
 import { Ionicons } from "@expo/vector-icons";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/HeaderButton";
+import { getAllPosts } from "../contextReducer/action";
 
 export default function IndexScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
+
+  useEffect(() => {
+    getAllPosts(dispatch);
+  }, []);
 
   return (
     <View style={styles.container}>
