@@ -24,7 +24,7 @@ export default function AddPostScreen({ navigation, route }) {
       content,
       id: blogId ? blogId : Math.random(),
     };
-    addPosts(dispatch, payload, blogId ? UPDATE_BLOGPOST : ADD_LOGPOST);
+    addPosts(dispatch, payload, blogId ? UPDATE_BLOGPOST : ADD_LOGPOST, blogId);
     navigation.navigate("allBlog");
   };
   return (

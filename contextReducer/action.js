@@ -14,9 +14,13 @@ export const getAllPosts = async (dispatch) => {
   }
 };
 
-export const addPosts = async (dispatch, data, type) => {
+export const addPosts = async (dispatch, data, type, id) => {
   try {
-    await jsonserver.post("/blogposts", data);
+    if (type === ADD_LOGPOST) {
+      await jsonserver.post("/blogposts", data);
+    } else {
+      await jsonserver.put(`/blogposts/${id}`, data);
+    }
     dispatch({ type: type, payload: data });
   } catch (error) {
     console.log("naveen: ", error.message);
