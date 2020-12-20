@@ -17,9 +17,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.maruti.blogApp",
+      "buildNumber": "1.0.0"
     },
     "android": {
+      "package": "com.maruti.blogApp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
