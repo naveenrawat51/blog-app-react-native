@@ -3,30 +3,22 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   FlatList,
   Platform,
   TouchableOpacity,
 } from "react-native";
 import { useStateValue } from "../context/BlogContext";
-import { ADD_LOGPOST, DELETE_BLOGPOST } from "../contextReducer/reducer";
+import { DELETE_BLOGPOST } from "../contextReducer/reducer";
 import { Ionicons } from "@expo/vector-icons";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/HeaderButton";
 
 export default function IndexScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
 
   return (
     <View style={styles.container}>
-      <Button
-        title="add Post"
-        onPress={() =>
-          dispatch({
-            type: ADD_LOGPOST,
-            payload: { name: "naveen", id: Math.random() },
-          })
-        }
-      />
-      {state.blogPosts && (
+      {state.blogPosts.length > 0 ? (
         <FlatList
           data={state.blogPosts}
           keyExtractor={(item) => item.id.toString()}
@@ -59,14 +51,27 @@ export default function IndexScreen({ navigation }) {
             );
           }}
         />
+      ) : (
+        <Text>Add Some post please!!</Text>
       )}
     </View>
   );
 }
 
-export const IndexScreenOptions = () => {
+export const IndexScreenOptions = ({ navigation }) => {
   return {
     headerTitle: "All Blogs",
+    headerRight: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="Edit Blog"
+            iconName={Platform.OS === "android" ? "md-add" : "ios-add"}
+            onPress={() => navigation.navigate("newPost")}
+          />
+        </HeaderButtons>
+      );
+    },
   };
 };
 
