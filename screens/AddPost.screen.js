@@ -42,7 +42,6 @@ export default function AddPostScreen({ navigation, route }) {
                 name: title,
                 content,
                 id: blogId ? blogId : Math.random(),
-                m: true,
               },
             });
             navigation.navigate("allBlog");
